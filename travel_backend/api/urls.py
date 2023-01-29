@@ -1,6 +1,6 @@
 from django.urls import path
-from travel_backend.api.views import get_destination_list, get_destination, get_town_list, get_town, get_hotel_list, \
-    get_hotel, get_room_list, get_room, reserve_room, get_user_reservations, cancel_reservation
+from travel_backend.api.views import get_destination_list, get_destination,get_all_towns, get_town_list, get_town, get_hotel_list, \
+    get_hotel,get_all_hotels, get_room_list, get_room, reserve_room, get_user_reservations, cancel_reservation
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -9,8 +9,10 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('destination_list/', get_destination_list),
     path('destination/<id>', get_destination),
+    path('all_towns/', get_all_towns),
     path('town_list/<id>', get_town_list),
     path('town/<id>', get_town),
+    path('all_hotels/', get_all_hotels),
     path('hotel_list/<id>', get_hotel_list),
     path('hotel/<id>', get_hotel),
     path('room_list/<id>', get_room_list),

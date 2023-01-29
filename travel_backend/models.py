@@ -112,7 +112,7 @@ class Town(models.Model):
 
 class Hotel(models.Model):
     title = models.CharField(max_length=120)
-    rating = models.FloatField()
+    rating = models.FloatField(null=True, blank=True)
     town = models.ForeignKey(Town, on_delete=models.CASCADE)
     image = CloudinaryField('hotel', )
 
@@ -131,6 +131,11 @@ class Room(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     price_per_guest = models.FloatField()
     is_available = models.BooleanField(default=True)
+    image = CloudinaryField('image')
+
+    @property
+    def get_img(self):
+        return {f'https://res.cloudinary.com/dkeewhdlg/{self.image}'}
 
     def __str__(self):
         return self.title

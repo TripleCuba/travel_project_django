@@ -21,6 +21,12 @@ def get_destination(request, id):
 
 
 @api_view()
+def get_all_towns(request):
+    towns = Town.objects.all()
+    serializer = TownSerializer(towns, many=True)
+    return Response(serializer.data)
+
+@api_view()
 def get_town_list(request, id):
     towns = Town.objects.filter(destination=id).all()
     serializer = TownSerializer(towns, many=True)
@@ -30,6 +36,7 @@ def get_town_list(request, id):
 @api_view()
 def get_town(request, id):
     town = Town.objects.filter(id=id).first()
+    print(town)
     if town:
         serializer = TownSerializer(town, many=False)
         data = serializer.data
@@ -41,6 +48,12 @@ def get_town(request, id):
 @api_view()
 def get_hotel_list(request, id):
     hotels = Hotel.objects.filter(town=id).all()
+    serializer = HotelSerializer(hotels, many=True)
+    return Response(serializer.data)
+
+@api_view()
+def get_all_hotels(request):
+    hotels = Hotel.objects.all()
     serializer = HotelSerializer(hotels, many=True)
     return Response(serializer.data)
 
@@ -87,7 +100,6 @@ def reserve_room(request, id):
     total_price = request.data['totalPrice']
 
     room = Room.objects.filter(id=id).first()
-    data = {}
     if room and room.is_available:
         room_serializer = RoomUpdateSerializer(instance=room, data={'is_available': False})
         room.is_available = False

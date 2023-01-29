@@ -47,6 +47,7 @@ def update_profile(request):
     request_data = request.data
 
     serializer = UpdateProfileSerializer(instance=profile, data=request_data)
+
     if serializer.is_valid():
         serializer.save()
         profile = Profile.objects.filter(id=request.user.profile.id).first()
